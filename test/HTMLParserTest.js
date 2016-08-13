@@ -1,8 +1,8 @@
-describe("Foundation.HTML.Parser", function () {
+describe("HTMLParser", function () {
   var parser;
 
   beforeEach(function () {
-    parser = new Foundation.HTML.Parser();
+    parser = new HTMLParser();
   })
 
   describe("#parse", function () {
