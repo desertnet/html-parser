@@ -1,8 +1,10 @@
+import RootNode from '../lib/Node/RootNode'
+
 describe("Foundation.HTML.Parser.Node", function () {
   var node;
 
   beforeEach(function () {
-    node = new Foundation.HTML.Parser.Node.Root();
+    node = new RootNode();
     node.addToken(new Foundation.Scanner.Token("text", "foo", 0, 1, 0));
     node.addToken(new Foundation.Scanner.Token("text", "bar", 3, 1, 3));
   })
@@ -28,7 +30,7 @@ describe("Foundation.HTML.Parser.Node", function () {
 
   describe("#indexRange", function () {
     it("should return null if there are no tokens for this node", function () {
-      var incompleteNode = new Foundation.HTML.Parser.Node.Root();
+      var incompleteNode = new RootNode();
       expect(incompleteNode.indexRange()).toBe(null);
     })
 
@@ -110,11 +112,11 @@ describe("Foundation.HTML.Parser.Node", function () {
   })
 })
 
-describe("Foundation.HTML.Parser.Node.Root", function () {
+describe("RootNode", function () {
   var root;
 
   beforeEach(function () {
-    root = new Foundation.HTML.Parser.Node.Root();
+    root = new RootNode();
   })
 
   describe("#canHaveChildren", function () {
@@ -140,7 +142,7 @@ describe("Foundation.HTML.Parser.Node.Text", function () {
 
   describe("#appendChild", function () {
     it("should throw an error when called a because it doesn't support children", function () {
-      var node = new Foundation.HTML.Parser.Node.Root();
+      var node = new RootNode();
       expect(function () {text.appendChild(node)}).toThrow();
     })
   })
