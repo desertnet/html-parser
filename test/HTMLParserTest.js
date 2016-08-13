@@ -83,7 +83,7 @@ describe("HTMLParser", function () {
   })
 
   describe("validate", function () {
-    var validate = Foundation.HTML.Parser.validate;
+    var validate = HTMLParser.validate;
 
     it("should consider header tags valid HTML", function () {
       expect(validate("<h1>foo</h1>")).toEqual([]);
