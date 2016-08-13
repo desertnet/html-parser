@@ -1,3 +1,5 @@
+import Instr from '../lib/Instr'
+
 describe("Foundation.HTML.Parser.Compiler", function () {
   var compiler, token;
 

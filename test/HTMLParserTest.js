@@ -1,3 +1,5 @@
+import Instr from '../lib/Instr'
+
 describe("HTMLParser", function () {
   var parser;
 

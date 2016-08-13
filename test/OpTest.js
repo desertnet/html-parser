@@ -1,3 +1,5 @@
+import Instr from '../lib/Instr'
+
 describe("Foundation.HTML.Parser.Op", function () {
   describe("#instruction", function () {
     it("should return the instruction for the parser", function () {
