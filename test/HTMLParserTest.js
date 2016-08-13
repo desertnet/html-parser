@@ -122,14 +122,14 @@ describe("HTMLParser", function () {
   describe("#executeOp", function () {
     it("should call popNode when passed a POP_NODE op", function () {
       parser.popNode = spyOnMethods(parser, parser.popNode);
-      var op = new Foundation.HTML.Parser.Op(Foundation.HTML.Parser.Instr.POP_NODE);
+      var op = new Foundation.HTML.Parser.Op(Instr.POP_NODE);
       parser.executeOp(op);
       expect(parser.popNode).toHaveBeenCalled();
     })
 
     it("should call pushNode when passed a PUSH_NODE op", function () {
       parser.pushNode = spyOnMethods(parser, parser.pushNode);
-      var op = new Foundation.HTML.Parser.Op(Foundation.HTML.Parser.Instr.PUSH_NODE);
+      var op = new Foundation.HTML.Parser.Op(Instr.PUSH_NODE);
       var node = new Foundation.HTML.Parser.Node.Text();
       op.setNode(node);
       parser.executeOp(op);
@@ -140,7 +140,7 @@ describe("HTMLParser", function () {
       var node = new Foundation.HTML.Parser.Node.Text();
       node.addToken = spyOnMethods(node, node.addToken);
 
-      var op = new Foundation.HTML.Parser.Op(Foundation.HTML.Parser.Instr.ADD_TOKEN);
+      var op = new Foundation.HTML.Parser.Op(Instr.ADD_TOKEN);
       var tok = new Foundation.Scanner.Token("text", "foo", 0, 1, 0);
       op.setToken(tok);
 

@@ -490,10 +490,10 @@ describe("Foundation.HTML.Parser.Compiler", function () {
     return args.map(function (opDef) {
       var op = new Foundation.HTML.Parser.Op(opDef[0] || opDef);
       if (Array.isArray(opDef)) {
-        if (op.instruction() === Foundation.HTML.Parser.Instr.PUSH_NODE) {
+        if (op.instruction() === Instr.PUSH_NODE) {
           op.setNode(opDef[1]);
         }
-        else if (op.instruction() === Foundation.HTML.Parser.Instr.ADD_TOKEN) {
+        else if (op.instruction() === Instr.ADD_TOKEN) {
           op.setToken(opDef[1]);
         }
         return op;
