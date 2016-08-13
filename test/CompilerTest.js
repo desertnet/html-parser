@@ -1,6 +1,7 @@
 import Instr from '../lib/Instr'
+import Compiler from '../lib/Compiler'
 
-describe("Foundation.HTML.Parser.Compiler", function () {
+describe("Compiler", function () {
   var compiler, token;
 
   beforeEach(function () {
@@ -32,7 +33,7 @@ describe("Foundation.HTML.Parser.Compiler", function () {
       }
     })
 
-    compiler = new Foundation.HTML.Parser.Compiler();
+    compiler = new Compiler();
     token = makeTok("text", "foo");
     resetMakeTok();
   })
