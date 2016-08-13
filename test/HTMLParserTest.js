@@ -1,3 +1,5 @@
+import {expect} from 'chai'
+import HTMLParser from '../lib/HTMLParser'
 import Instr from '../lib/Instr'
 
 describe("HTMLParser", function () {
