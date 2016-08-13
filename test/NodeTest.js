@@ -40,7 +40,7 @@ describe("Foundation.HTML.Parser.Node", function () {
   describe("#canHaveChildren", function () {
     it("should throw an error on base class", function () {
       expect(function () {
-        Foundation.HTML.Parser.Node.prototype.canHaveChildren.call(node)
+        Node.prototype.canHaveChildren.call(node)
       }).toThrow();
     })
   })
@@ -48,7 +48,7 @@ describe("Foundation.HTML.Parser.Node", function () {
   describe("#toString", function () {
     it("should throw an error when called on base class", function () {
       expect(function () {
-        Foundation.HTML.Parser.Node.prototype.toString.call(node);
+        Node.prototype.toString.call(node);
       }).toThrow();
     })
   })
