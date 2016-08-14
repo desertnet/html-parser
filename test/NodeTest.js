@@ -4,6 +4,7 @@ import TextNode from '../lib/Node/TextNode'
 import AttrNode from '../lib/Node/AttrNode'
 import CloseTagNode from '../lib/Node/CloseTagNode'
 import CommentNode from '../lib/Node/CommentNode'
+import EntityNode from '../lib/Node/EntityNode'
 
 describe("Foundation.HTML.Parser.Node", function () {
   var node;
@@ -307,11 +308,11 @@ describe("CommentNode", function () {
   })
 })
 
-describe("Foundation.HTML.Parser.Node.Entity", function () {
+describe("EntityNode", function () {
   var pooEnt;
 
   beforeEach(function () {
-    pooEnt = new Foundation.HTML.Parser.Node.Entity();
+    pooEnt = new EntityNode();
     pooEnt.addToken(new Foundation.Scanner.Token("hex", "#128169", 0, 1, 0));
   })
 
