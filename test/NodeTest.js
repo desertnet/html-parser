@@ -1,5 +1,6 @@
 import RootNode from '../lib/Node/RootNode'
 import TagNode from '../lib/Node/TagNode'
+import TextNode from '../lib/Node/TextNode'
 
 describe("Foundation.HTML.Parser.Node", function () {
   var node;
@@ -60,7 +61,7 @@ describe("Foundation.HTML.Parser.Node", function () {
     it("should return a copy of the node's children array", function () {
       var tag = new TagNode();
       tag.setTagName("foo");
-      var text = new Foundation.HTML.Parser.Node.Text();
+      var text = new TextNode();
       tag.appendChild(text);
       var childrenCopy = tag.children();
       childrenCopy.pop();
@@ -68,7 +69,7 @@ describe("Foundation.HTML.Parser.Node", function () {
     })
 
     it("should return null when the node cannot contain children", function () {
-      var text = new Foundation.HTML.Parser.Node.Text();
+      var text = new TextNode();
       expect(text.children()).toBe(null);
     })
 
@@ -83,11 +84,11 @@ describe("Foundation.HTML.Parser.Node", function () {
     it("should return the last child in the node's children array", function () {
       var tag = new TagNode();
       tag.setTagName("foo");
-      var text1 = new Foundation.HTML.Parser.Node.Text();
+      var text1 = new TextNode();
       tag.appendChild(text1);
-      var text2 = new Foundation.HTML.Parser.Node.Text();
+      var text2 = new TextNode();
       tag.appendChild(text2);
-      var text3 = new Foundation.HTML.Parser.Node.Text();
+      var text3 = new TextNode();
       tag.appendChild(text3);
       expect(tag.lastChild()).toBe(text3);
     })
@@ -127,11 +128,11 @@ describe("RootNode", function () {
   })
 })
 
-describe("Foundation.HTML.Parser.Node.Text", function () {
+describe("TextNode", function () {
   var text;
 
   beforeEach(function () {
-    text = new Foundation.HTML.Parser.Node.Text();
+    text = new TextNode();
     text.addToken(new Foundation.Scanner.Token("text", "foo", 0, 1, 0));
   })
 
@@ -227,7 +228,7 @@ describe("TagNode", function () {
     })
 
     it("should return a string with tag and its contents for a p tag with a text node", function () {
-      var text = new Foundation.HTML.Parser.Node.Text();
+      var text = new TextNode();
       text.addToken(new Foundation.Scanner.Token("text", "foo", 0, 1, 0));
       p.appendChild(text);
       expect(p.toString()).toBe("<p>'foo'");

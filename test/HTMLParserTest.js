@@ -2,6 +2,7 @@ import {expect} from 'chai'
 import HTMLParser from '../lib/HTMLParser'
 import Instr from '../lib/Instr'
 import TagNode from '../lib/Node/TagNode'
+import TextNode from '../lib/Node/TextNode'
 
 describe("HTMLParser", function () {
   var parser;
@@ -135,14 +136,14 @@ describe("HTMLParser", function () {
     it("should call pushNode when passed a PUSH_NODE op", function () {
       parser.pushNode = spyOnMethods(parser, parser.pushNode);
       var op = new Foundation.HTML.Parser.Op(Instr.PUSH_NODE);
-      var node = new Foundation.HTML.Parser.Node.Text();
+      var node = new TextNode();
       op.setNode(node);
       parser.executeOp(op);
       expect(parser.pushNode).toHaveBeenCalledWith(op.node());
     })
 
     it("should call node.addToken when passed a ADD_TOKEN op", function () {
-      var node = new Foundation.HTML.Parser.Node.Text();
+      var node = new TextNode();
       node.addToken = spyOnMethods(node, node.addToken);
 
       var op = new Foundation.HTML.Parser.Op(Instr.ADD_TOKEN);
@@ -157,7 +158,7 @@ describe("HTMLParser", function () {
 
   describe("#currentNode", function () {
     it("should return the node at the top of the node stack", function () {
-      var node = new Foundation.HTML.Parser.Node.Text();
+      var node = new TextNode();
       parser.pushNode(node);
       expect(parser.currentNode()).toBe(node);
     })
@@ -169,8 +170,8 @@ describe("HTMLParser", function () {
 
   describe("#popNode", function () {
     it("should remove the node at the top of the stack", function () {
-      var node1 = new Foundation.HTML.Parser.Node.Text();
-      var node2 = new Foundation.HTML.Parser.Node.Text();
+      var node1 = new TextNode();
+      var node2 = new TextNode();
       parser.pushNode(node1);
       parser.pushNode(node2);
       parser.popNode();
@@ -180,7 +181,7 @@ describe("HTMLParser", function () {
     it("should call the applyCompletedNode method", function () {
       parser.applyCompletedNode = spyOnMethods(parser, parser.applyCompletedNode);
 
-      var node = new Foundation.HTML.Parser.Node.Text();
+      var node = new TextNode();
       parser.pushNode(node);
       parser.popNode();
       expect(parser.applyCompletedNode).toHaveBeenCalledWith(node);
@@ -193,7 +194,7 @@ describe("HTMLParser", function () {
 
   describe("#applyCompletedNode", function () {
     it("should add a text node to the currently open element", function () {
-      var node = new Foundation.HTML.Parser.Node.Text();
+      var node = new TextNode();
       parser.applyCompletedNode(node);
       expect(parser.currentOpenElement().children().pop()).toBe(node);
     })
@@ -206,7 +207,7 @@ describe("HTMLParser", function () {
     })
 
     it("should throw an error if it attempts to add an attribute node to a non-tag node", function () {
-      parser.pushNode(new Foundation.HTML.Parser.Node.Text());
+      parser.pushNode(new TextNode());
       expect(function () {
         parser.applyCompletedNode(new Foundation.HTML.Parser.Node.Attr());
       }).toThrow();

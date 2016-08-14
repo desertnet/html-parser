@@ -1,4 +1,5 @@
 import Instr from '../lib/Instr'
+import TextNode from '../lib/Node/TextNode'
 
 describe("Foundation.HTML.Parser.Op", function () {
   describe("#instruction", function () {
@@ -69,7 +70,7 @@ describe("Foundation.HTML.Parser.Op", function () {
   describe("#toString", function () {
     it("should return a string containing the instr name and node for PUSH_NODE ops", function () {
       var op = new Foundation.HTML.Parser.Op(Instr.PUSH_NODE);
-      op.setNode(new Foundation.HTML.Parser.Node.Text());
+      op.setNode(new TextNode());
       expect(op.toString()).toBe("PUSH_NODE:TEXT");
     })
 
