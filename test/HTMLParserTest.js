@@ -3,6 +3,8 @@ import HTMLParser from '../lib/HTMLParser'
 import Instr from '../lib/Instr'
 import TagNode from '../lib/Node/TagNode'
 import TextNode from '../lib/Node/TextNode'
+import AttrNode from '../lib/Node/AttrNode'
+import CloseTagNode from '../lib/Node/CloseTagNode'
 
 describe("HTMLParser", function () {
   var parser;
@@ -116,7 +118,7 @@ describe("HTMLParser", function () {
     })
 
     it("should add errors to the topmost unfinished node", function () {
-      var attrNode = new Foundation.HTML.Parser.Node.Attr();
+      var attrNode = new AttrNode();
       parser.pushNode(tagNode);
       parser.pushNode(attrNode);
       parser.finalize();
@@ -200,7 +202,7 @@ describe("HTMLParser", function () {
     })
 
     it("should add an attribute node to the current tag node", function () {
-      var attr = new Foundation.HTML.Parser.Node.Attr();
+      var attr = new AttrNode();
       parser.pushNode(new TagNode());
       parser.applyCompletedNode(attr);
       expect(parser.currentNode().attributes()[0]).toBe(attr);
@@ -209,7 +211,7 @@ describe("HTMLParser", function () {
     it("should throw an error if it attempts to add an attribute node to a non-tag node", function () {
       parser.pushNode(new TextNode());
       expect(function () {
-        parser.applyCompletedNode(new Foundation.HTML.Parser.Node.Attr());
+        parser.applyCompletedNode(new AttrNode());
       }).toThrow();
     })
 
@@ -231,7 +233,7 @@ describe("HTMLParser", function () {
 
     it("should call mostRecentOpenElementWithName when passed a close tag node", function () {
       parser.mostRecentOpenElementWithName = spyOnMethods(parser, parser.mostRecentOpenElementWithName);
-      var close = new Foundation.HTML.Parser.Node.CloseTag();
+      var close = new CloseTagNode();
       close.setTagName("FOO");
       parser.applyCompletedNode(close);
       expect(parser.mostRecentOpenElementWithName).toHaveBeenCalledWith("foo");
@@ -242,7 +244,7 @@ describe("HTMLParser", function () {
 
       var div = new TagNode();
       div.setTagName("div");
-      var closeDiv = new Foundation.HTML.Parser.Node.CloseTag();
+      var closeDiv = new CloseTagNode();
       closeDiv.setTagName("div");
 
       parser.pushOpenElement(div);
@@ -264,7 +266,7 @@ describe("HTMLParser", function () {
       div.setTagName("div");
       var span = new TagNode();
       span.setTagName("span");
-      var divClose = new Foundation.HTML.Parser.Node.CloseTag();
+      var divClose = new CloseTagNode();
       divClose.setTagName("div");
 
       parser.pushOpenElement(div);
@@ -276,7 +278,7 @@ describe("HTMLParser", function () {
     it("should add a closing tag node to the current open element if there is no matching open tag", function () {
       var div = new TagNode();
       div.setTagName("div");
-      var spanClose = new Foundation.HTML.Parser.Node.CloseTag();
+      var spanClose = new CloseTagNode();
       spanClose.setTagName("span");
 
       parser.pushOpenElement(div);
@@ -287,7 +289,7 @@ describe("HTMLParser", function () {
     it("should set an error on bogus closing tags", function () {
       var div = new TagNode();
       div.setTagName("div");
-      var spanClose = new Foundation.HTML.Parser.Node.CloseTag();
+      var spanClose = new CloseTagNode();
       spanClose.setTagName("span");
 
       parser.pushOpenElement(div);
@@ -316,7 +318,7 @@ describe("HTMLParser", function () {
     })
 
     it("should make closed elements children of each other and the currently open element", function () {
-      var closeDiv = new Foundation.HTML.Parser.Node.CloseTag();
+      var closeDiv = new CloseTagNode();
       closeDiv.setTagName("div");
 
       parser.pushOpenElement(div1);
@@ -334,7 +336,7 @@ describe("HTMLParser", function () {
     it("should set an error on closing tag when it closes other tags still open", function () {
       var span = new TagNode();
       span.setTagName("span");
-      var closeDiv = new Foundation.HTML.Parser.Node.CloseTag();
+      var closeDiv = new CloseTagNode();
       closeDiv.setTagName("div");
       div1.appendChild(closeDiv);
 
@@ -345,7 +347,7 @@ describe("HTMLParser", function () {
     })
 
     it("should set an error on elements without closing tags", function () {
-      var closeDiv = new Foundation.HTML.Parser.Node.CloseTag();
+      var closeDiv = new CloseTagNode();
       closeDiv.setTagName("div");
       div1.appendChild(closeDiv);
 

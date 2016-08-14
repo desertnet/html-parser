@@ -1,6 +1,8 @@
 import RootNode from '../lib/Node/RootNode'
 import TagNode from '../lib/Node/TagNode'
 import TextNode from '../lib/Node/TextNode'
+import AttrNode from '../lib/Node/AttrNode'
+import CloseTagNode from '../lib/Node/CloseTagNode'
 
 describe("Foundation.HTML.Parser.Node", function () {
   var node;
@@ -167,7 +169,7 @@ describe("TagNode", function () {
     br = new TagNode();
     br.addToken(new Foundation.Scanner.Token("tagStart", "<br", 0, 1, 0));
 
-    closeP = new Foundation.HTML.Parser.Node.CloseTag();
+    closeP = new CloseTagNode();
     closeP.setTagName("p");
   })
 
@@ -199,7 +201,7 @@ describe("TagNode", function () {
     })
 
     it("should append bogus closing tags to the list of child nodes and not make it the closing tag", function () {
-      var closeDiv = new Foundation.HTML.Parser.Node.CloseTag();
+      var closeDiv = new CloseTagNode();
       closeDiv.setTagName("div");
       p.appendChild(closeDiv);
       expect(p.lastChild()).toBe(closeDiv);
@@ -245,7 +247,7 @@ describe("TagNode", function () {
 
   describe("#errors", function () {
     it("should include errors in its attributes", function () {
-      var attr = new Foundation.HTML.Parser.Node.Attr();
+      var attr = new AttrNode();
       var error = new Foundation.HTML.Parser.Error();
       attr.addError(error);
       p.addAttribute(attr);
@@ -261,11 +263,11 @@ describe("TagNode", function () {
   })
 })
 
-describe("Foundation.HTML.Parser.Node.Attr", function () {
+describe("AttrNode", function () {
   var dataAttr;
 
   beforeEach(function () {
-    dataAttr = new Foundation.HTML.Parser.Node.Attr();
+    dataAttr = new AttrNode();
     dataAttr.addToken(new Foundation.Scanner.Token("attributeStart", "data-foo", 0, 1, 0));
     dataAttr.addToken(new Foundation.Scanner.Token("text", "bar", 0, 1, 0));
   })
@@ -325,11 +327,11 @@ describe("Foundation.HTML.Parser.Node.Entity", function () {
   })
 })
 
-describe("Foundation.HTML.Parser.Node.CloseTag", function () {
+describe("CloseTagNode", function () {
   var closeTag;
 
   beforeEach(function () {
-    closeTag = new Foundation.HTML.Parser.Node.CloseTag();
+    closeTag = new CloseTagNode();
     closeTag.addToken(new Foundation.Scanner.Token("closeTagStart", "</p", 0, 1, 0));
     closeTag.addToken(new Foundation.Scanner.Token("endTag", ">", 3, 1, 3));
   })
@@ -348,7 +350,7 @@ describe("Foundation.HTML.Parser.Node.CloseTag", function () {
 
   describe("#tagName", function () {
     it("should return the lowercased version of the tag name", function () {
-      var tag = new Foundation.HTML.Parser.Node.CloseTag();
+      var tag = new CloseTagNode();
       tag.setTagName("FOO");
       expect(tag.tagName()).toBe("foo");
     })
@@ -356,13 +358,13 @@ describe("Foundation.HTML.Parser.Node.CloseTag", function () {
 
   describe("#addToken", function () {
     it("should set the tagName when passed a closeTagStart token", function () {
-      var closeTag = new Foundation.HTML.Parser.Node.CloseTag();
+      var closeTag = new CloseTagNode();
       closeTag.addToken(new Foundation.Scanner.Token("closeTagStart", "</foo", 0, 1, 0));
       expect(closeTag.tagName()).toBe("foo");
     })
 
     it("should set the tagName when passed a closeTag token", function () {
-      var closeTag = new Foundation.HTML.Parser.Node.CloseTag();
+      var closeTag = new CloseTagNode();
       closeTag.addToken(new Foundation.Scanner.Token("closeTag", "</foobar>", 0, 1, 0));
       expect(closeTag.tagName()).toBe("foobar");
     })
