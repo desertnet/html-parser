@@ -1,33 +1,34 @@
 import TagNode from '../lib/Node/TagNode'
 import HTMLParseError from '../lib/HTMLParseError'
+import {expect} from 'chai'
 
 describe("HTMLParseError", function () {
   var error, token;
 
   beforeEach(function () {
     error = new HTMLParseError();
-    token = new Foundation.Scanner.Token("foo", "bar", 8, 3, 2);
+    token = {type: "foo", value: "bar", index: 8, line: 3, column: 2};
   })
 
   describe("#addToken", function () {
     it("should correctly set the startIndex", function () {
       error.addToken(token);
-      expect(error.startIndex()).toBe(8);
+      expect(error.startIndex()).to.be.equal(8);
     })
 
     it("should correctly set the line", function () {
       error.addToken(token);
-      expect(error.line()).toBe(3);
+      expect(error.line()).to.be.equal(3);
     })
 
     it("should correctly set the column", function () {
       error.addToken(token);
-      expect(error.column()).toBe(2);
+      expect(error.column()).to.be.equal(2);
     })
 
     it("should correctly set the endIndex", function () {
       error.addToken(token);
-      expect(error.endIndex()).toBe(11);
+      expect(error.endIndex()).to.be.equal(11);
     })
   })
 
@@ -36,7 +37,7 @@ describe("HTMLParseError", function () {
       var node = new TagNode();
       node.addToken(token);
       error.addTokensFromNode(node);
-      expect(node.tokens()).toEqual([token]);
+      expect(node.tokens()).to.deep.equal([token]);
     })
   })
 })
