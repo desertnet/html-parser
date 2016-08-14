@@ -35,6 +35,6 @@
     "sinon-chai": "^2.8.0"
   },
   "dependencies": {
-    "@desertnet/scanner": "^1.0.2"
+    "@desertnet/scanner": "^1.1.0"
   }
 }
