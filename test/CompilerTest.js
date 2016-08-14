@@ -9,7 +9,7 @@ describe("Compiler", function () {
       "toMatchCodeDescription": function (util, customEqualityTesters) {
         return {
           "compare": function (actual, expected) {
-            var actualCode = /** @type {Array.<Foundation.HTML.Parser.Op>} */ (actual);
+            var actualCode = /** @type {Array.<Op>} */ (actual);
             var actualCodeDesc = actualCode.join(" ");
 
             if (expected === undefined) {
@@ -491,7 +491,7 @@ describe("Compiler", function () {
   function makeOps (foo) {
     var args = Array.prototype.slice.call(arguments, 0);
     return args.map(function (opDef) {
-      var op = new Foundation.HTML.Parser.Op(opDef[0] || opDef);
+      var op = new Op(opDef[0] || opDef);
       if (Array.isArray(opDef)) {
         if (op.instruction() === Instr.PUSH_NODE) {
           op.setNode(opDef[1]);
