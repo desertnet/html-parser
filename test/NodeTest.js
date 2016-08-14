@@ -5,7 +5,7 @@ import AttrNode from '../lib/Node/AttrNode'
 import CloseTagNode from '../lib/Node/CloseTagNode'
 import CommentNode from '../lib/Node/CommentNode'
 import EntityNode from '../lib/Node/EntityNode'
-import HTMLParseError from '../HTMLParseError'
+import HTMLParseError from '../lib/HTMLParseError'
 
 describe("Foundation.HTML.Parser.Node", function () {
   var node;
