@@ -1,39 +1,40 @@
+import chai, {expect} from 'chai'
+import sinon from 'sinon'
+import sinonChai from 'sinon-chai'
+import chaiThings from 'chai-things'
+
+import {Token as ScannerToken} from '@desertnet/scanner'
 import Instr from '../lib/Instr'
 import Op from '../lib/Op'
 import Compiler from '../lib/Compiler'
+
+chai.use(sinonChai)
+chai.use(chaiThings)
+
+chai.Assertion.addMethod('toMatchCodeDescription', function (expectedCodeDesc) {
+  new chai.Assertion(this._obj).to.be.instanceof(Array)
+  new chai.Assertion(this._obj).to.all.be.instanceof(Op)
+
+  const actualCodeDesc = this._obj.join(" ")
+
+  if (expectedCodeDesc === undefined) {
+    expectedCodeDesc = ''
+  }
+
+  this.assert(
+    actualCodeDesc === expectedCodeDesc,
+    'expected #{act} to be #{exp}',
+    'expected #{act} to not be #{exp}',
+    expectedCodeDesc,
+    actualCodeDesc,
+    true
+  )
+})
 
 describe("Compiler", function () {
   var compiler, token;
 
   beforeEach(function () {
-    jasmine.addMatchers({
-      "toMatchCodeDescription": function (util, customEqualityTesters) {
-        return {
-          "compare": function (actual, expected) {
-            var actualCode = /** @type {Array.<Op>} */ (actual);
-            var actualCodeDesc = actualCode.join(" ");
-
-            if (expected === undefined) {
-              expected = "";
-            }
-
-            var result = {};
-
-            result["pass"] = actualCodeDesc === expected;
-
-            if (result["pass"]) {
-              result["message"] = "Expected '" + actualCodeDesc + "' not to match '" + expected + "'";
-            }
-            else {
-              result["message"] = "Expected '" + actualCodeDesc + "' to match '" + expected + "'";
-            }
-
-            return result;
-          }
-        }
-      }
-    })
-
     compiler = new Compiler();
     token = makeTok("text", "foo");
     resetMakeTok();
@@ -47,61 +48,61 @@ describe("Compiler", function () {
     it("should throw an error when passed an unexpected dialect", function () {
       expect(function () {
         compiler.generateCodeForTokenInDialect(token, "bar");
-      }).toThrow();
+      }).to.throw();
     })
 
     it("should call generateCodeForContentToken when passed a token in the content dialect", function () {
-      compiler.generateCodeForContentToken = spyOnMethods(compiler, compiler.generateCodeForContentToken);
+      sinon.spy(compiler, 'generateCodeForContentToken');
       compiler.generateCodeForTokenInDialect(token, "content");
-      expect(compiler.generateCodeForContentToken).toHaveBeenCalledWith(token);
+      expect(compiler.generateCodeForContentToken).to.have.been.calledWith(token);
     })
 
     it("should call generateCodeForCommentToken when passed a token in the comment dialect", function () {
-      compiler.generateCodeForCommentToken = spyOnMethods(compiler, compiler.generateCodeForCommentToken);
+      sinon.spy(compiler, 'generateCodeForCommentToken');
       compiler.generateCodeForTokenInDialect(token, "comment");
-      expect(compiler.generateCodeForCommentToken).toHaveBeenCalledWith(token);
+      expect(compiler.generateCodeForCommentToken).to.have.been.calledWith(token);
     })
 
     it("should call generateCodeForEntityToken when passed a token in the entity dialect", function () {
-      compiler.generateCodeForEntityToken = spyOnMethods(compiler, compiler.generateCodeForEntityToken);
+      sinon.stub(compiler, 'generateCodeForEntityToken');
       compiler.generateCodeForTokenInDialect(token, "entity");
-      expect(compiler.generateCodeForEntityToken).toHaveBeenCalledWith(token);
+      expect(compiler.generateCodeForEntityToken).to.have.been.calledWith(token);
     })
 
     it("should call generateCodeForTagToken when passed a token in the tag dialect", function () {
-      compiler.generateCodeForTagToken = spyOnMethods(compiler, compiler.generateCodeForTagToken);
+      sinon.stub(compiler, 'generateCodeForTagToken');
       compiler.generateCodeForTokenInDialect(token, "tag");
-      expect(compiler.generateCodeForTagToken).toHaveBeenCalledWith(token);
+      expect(compiler.generateCodeForTagToken).to.have.been.calledWith(token);
     })
 
     it("should call generateCodeForAttributeToken when passed a token in the attribute dialect", function () {
-      compiler.generateCodeForAttributeToken = spyOnMethods(compiler, compiler.generateCodeForAttributeToken);
+      sinon.stub(compiler, 'generateCodeForAttributeToken');
       compiler.generateCodeForTokenInDialect(token, "attribute");
-      expect(compiler.generateCodeForAttributeToken).toHaveBeenCalledWith(token);
+      expect(compiler.generateCodeForAttributeToken).to.have.been.calledWith(token);
     })
 
     it("should call generateCodeForAttributeValueToken when passed a token in the attributeValue dialect", function () {
-      compiler.generateCodeForAttributeValueToken = spyOnMethods(compiler, compiler.generateCodeForAttributeValueToken);
+      sinon.spy(compiler, 'generateCodeForAttributeValueToken');
       compiler.generateCodeForTokenInDialect(token, "attributeValue");
-      expect(compiler.generateCodeForAttributeValueToken).toHaveBeenCalledWith(token);
+      expect(compiler.generateCodeForAttributeValueToken).to.have.been.calledWith(token);
     })
 
     it("should call generateCodeForAttributeValueQuotedToken when passed a token in the attributeValueQuoted dialect", function () {
-      compiler.generateCodeForAttributeValueQuotedToken = spyOnMethods(compiler, compiler.generateCodeForAttributeValueQuotedToken);
+      sinon.spy(compiler, 'generateCodeForAttributeValueQuotedToken');
       compiler.generateCodeForTokenInDialect(token, "attributeValueQuoted");
-      expect(compiler.generateCodeForAttributeValueQuotedToken).toHaveBeenCalledWith(token);
+      expect(compiler.generateCodeForAttributeValueQuotedToken).to.have.been.calledWith(token);
     })
 
     it("should call generateCodeForCloseTagToken when passed a token in the closeTag dialect", function () {
-      compiler.generateCodeForCloseTagToken = spyOnMethods(compiler, compiler.generateCodeForCloseTagToken);
+      sinon.stub(compiler, 'generateCodeForCloseTagToken');
       compiler.generateCodeForTokenInDialect(token, "closeTag");
-      expect(compiler.generateCodeForCloseTagToken).toHaveBeenCalledWith(token);
+      expect(compiler.generateCodeForCloseTagToken).to.have.been.calledWith(token);
     })
 
     it("should call generateCodeForRawtextToken when passed a token in the rawtext dialect", function () {
-      compiler.generateCodeForRawtextToken = spyOnMethods(compiler, compiler.generateCodeForRawtextToken);
+      sinon.spy(compiler, 'generateCodeForRawtextToken');
       compiler.generateCodeForTokenInDialect(token, "rawtext");
-      expect(compiler.generateCodeForRawtextToken).toHaveBeenCalledWith(token);
+      expect(compiler.generateCodeForRawtextToken).to.have.been.calledWith(token);
     })
   })
 
@@ -122,9 +123,9 @@ describe("Compiler", function () {
     })
 
     it("should call pushDialect when passed a commentStart token", function () {
-      compiler.pushDialect = spyOnMethods(compiler, compiler.pushDialect);
+      sinon.spy(compiler, 'pushDialect');
       compiler.generateCodeForContentToken(makeTok("commentStart", "<!--"));
-      expect(compiler.pushDialect).toHaveBeenCalledWith("comment");
+      expect(compiler.pushDialect).to.have.been.calledWith("comment");
     })
 
     it("should return correct code for an entityStart token", function () {
@@ -133,9 +134,9 @@ describe("Compiler", function () {
     })
 
     it("should call pushDialect when passed an entityStart token", function () {
-      compiler.pushDialect = spyOnMethods(compiler, compiler.pushDialect);
+      sinon.spy(compiler, 'pushDialect');
       compiler.generateCodeForContentToken(makeTok("entityStart", "&"));
-      expect(compiler.pushDialect).toHaveBeenCalledWith("entity");
+      expect(compiler.pushDialect).to.have.been.calledWith("entity");
     })
 
     it("should return correct code for a tagStart token", function () {
@@ -144,9 +145,9 @@ describe("Compiler", function () {
     })
 
     it("should call pushDialect when passed a tagStart token", function () {
-      compiler.pushDialect = spyOnMethods(compiler, compiler.pushDialect);
+      sinon.spy(compiler, 'pushDialect');
       compiler.generateCodeForContentToken(makeTok("tagStart", "<foo"));
-      expect(compiler.pushDialect).toHaveBeenCalledWith("tag");
+      expect(compiler.pushDialect).to.have.been.calledWith("tag");
     })
 
     it("should return the correct code for a closeTagStart token", function () {
@@ -155,9 +156,9 @@ describe("Compiler", function () {
     })
 
     it("should call pushDialect when passed a closeTagStart token", function () {
-      compiler.pushDialect = spyOnMethods(compiler, compiler.pushDialect);
+      sinon.spy(compiler, 'pushDialect');
       compiler.generateCodeForContentToken(makeTok("closeTagStart", "</foo"));
-      expect(compiler.pushDialect).toHaveBeenCalledWith("closeTag");
+      expect(compiler.pushDialect).to.have.been.calledWith("closeTag");
     })
   })
 
@@ -178,9 +179,9 @@ describe("Compiler", function () {
     })
 
     it("should call popDialect when passed a commentEnd token", function () {
-      compiler.popDialect = spyOnMethods(compiler, compiler.popDialect);
+      sinon.spy(compiler, 'popDialect');
       compiler.generateCodeForCommentToken(makeTok("commentEnd", "-->"));
-      expect(compiler.popDialect).toHaveBeenCalledWith();
+      expect(compiler.popDialect).to.have.been.calledWith();
     })
   })
 
@@ -199,9 +200,9 @@ describe("Compiler", function () {
       })
 
       it("should call popDialect when passed an " + tokenType + " token", function () {
-        compiler.popDialect = spyOnMethods(compiler, compiler.popDialect);
+        sinon.spy(compiler, 'popDialect');
         compiler.generateCodeForEntityToken(makeTok(tokenType, "foo"));
-        expect(compiler.popDialect).toHaveBeenCalledWith();
+        expect(compiler.popDialect).to.have.been.calledWith();
       })
     })
   })
@@ -213,9 +214,9 @@ describe("Compiler", function () {
     })
 
     it("should call popDialect when passed a tagEnd token", function () {
-      compiler.popDialect = spyOnMethods(compiler, compiler.popDialect);
+      sinon.spy(compiler, 'popDialect');
       compiler.generateCodeForTagToken(makeTok("tagEnd", ">"));
-      expect(compiler.popDialect).toHaveBeenCalledWith();
+      expect(compiler.popDialect).to.have.been.calledWith();
     })
 
     it("should return correct code for a whitespace token", function () {
@@ -229,14 +230,14 @@ describe("Compiler", function () {
     })
 
     it("should call pushDialect when passed an attributeStart token", function () {
-      compiler.pushDialect = spyOnMethods(compiler, compiler.pushDialect);
+      sinon.spy(compiler, 'pushDialect');
       compiler.generateCodeForTagToken(makeTok("attributeStart", "foo"));
-      expect(compiler.pushDialect).toHaveBeenCalledWith("attribute");
+      expect(compiler.pushDialect).to.have.been.calledWith("attribute");
     })
 
     it("should set its scanner's dialect to attribute after being passed an attributeStart token", function () {
       compiler.generateCodeForTagToken(makeTok("attributeStart", "foo"));
-      expect(compiler.currentDialect()).toBe("attribute");
+      expect(compiler.currentDialect()).to.be.equal("attribute");
     })
 
     it("should return correct code for a selfClose token", function () {
@@ -262,9 +263,9 @@ describe("Compiler", function () {
     })
 
     it("should call popDialect twice when passed a tagEnd token", function () {
-      compiler.popDialect = spyOnMethods(compiler, compiler.popDialect);
+      sinon.spy(compiler, 'popDialect');
       compiler.generateCodeForAttributeToken(makeTok("tagEnd", ">"));
-      expect(compiler.popDialect.calls.count()).toBe(2);
+      expect(compiler.popDialect).to.have.been.calledTwice;
     })
 
     it("should return the correct code for a selfClose token", function () {
@@ -273,9 +274,9 @@ describe("Compiler", function () {
     })
 
     it("should call popDialect when passed a selfClose token", function () {
-      compiler.popDialect = spyOnMethods(compiler, compiler.popDialect);
+      sinon.spy(compiler, 'popDialect');
       compiler.generateCodeForAttributeToken(makeTok("selfClose", "/"));
-      expect(compiler.popDialect).toHaveBeenCalledWith();
+      expect(compiler.popDialect).to.have.been.calledWith();
     })
 
     "attributeValueStart attributeValueQuotedStart".split(" ").forEach(function (tokenType) {
@@ -285,27 +286,27 @@ describe("Compiler", function () {
       })
 
       it("should call popDialect and pushDialect when passed an " + tokenType + " token", function () {
-        compiler.popDialect = spyOnMethods(compiler, compiler.popDialect);
-        compiler.pushDialect = spyOnMethods(compiler, compiler.pushDialect);
+        sinon.spy(compiler, 'popDialect');
+        sinon.spy(compiler, 'pushDialect');
         compiler.generateCodeForAttributeToken(makeTok(tokenType, "="));
-        expect(compiler.popDialect).toHaveBeenCalledWith();
-        expect(compiler.pushDialect).toHaveBeenCalledWith(tokenType.replace(/Start$/, ""));
+        expect(compiler.popDialect).to.have.been.calledWith();
+        expect(compiler.pushDialect).to.have.been.calledWith(tokenType.replace(/Start$/, ""));
       })
 
       it("should set its scanner's dialect to " + tokenType.replace(/Start$/, "") + " after being passed an " + tokenType + " token", function () {
         compiler.generateCodeForAttributeToken(makeTok(tokenType, "="));
-        expect(compiler.currentDialect()).toBe(tokenType.replace(/Start$/, ""));
+        expect(compiler.currentDialect()).to.be.equal(tokenType.replace(/Start$/, ""));
       })
     })
 
     it("should set the expected attribute end token to dquo when passed an attributeValueQuotedStart with a double quote", function () {
       compiler.generateCodeForAttributeToken(makeTok("attributeValueQuotedStart", '="'));
-      expect(compiler.expectedAttributeValueEndTokenType()).toBe("dquo");
+      expect(compiler.expectedAttributeValueEndTokenType()).to.be.equal("dquo");
     })
 
     it("should set the expected attribute end token to squo when passed an attributeValueQuotedStart with a single quote", function () {
       compiler.generateCodeForAttributeToken(makeTok("attributeValueQuotedStart", "='"));
-      expect(compiler.expectedAttributeValueEndTokenType()).toBe("squo");
+      expect(compiler.expectedAttributeValueEndTokenType()).to.be.equal("squo");
     })
 
     "attributeStart error".split(" ").forEach(function (tokenType) {
@@ -323,9 +324,9 @@ describe("Compiler", function () {
     })
 
     it("should call popDialect when passed a whitespace token", function () {
-      compiler.popDialect = spyOnMethods(compiler, compiler.popDialect);
+      sinon.spy(compiler, 'popDialect');
       compiler.generateCodeForAttributeValueToken(makeTok("whitespace", "  "));
-      expect(compiler.popDialect).toHaveBeenCalledWith();
+      expect(compiler.popDialect).to.have.been.calledWith();
     })
 
     it("should return the correct code for an entityStart token", function () {
@@ -334,9 +335,9 @@ describe("Compiler", function () {
     })
 
     it("should push the entity dialect when passed an entityStart token", function () {
-      compiler.pushDialect = spyOnMethods(compiler, compiler.pushDialect);
+      sinon.spy(compiler, 'pushDialect');
       compiler.generateCodeForAttributeValueToken(makeTok("entityStart", "&foo"));
-      expect(compiler.pushDialect).toHaveBeenCalledWith("entity");
+      expect(compiler.pushDialect).to.have.been.calledWith("entity");
     })
 
     it("should return the correct code for a tagEnd token", function () {
@@ -345,9 +346,9 @@ describe("Compiler", function () {
     })
 
     it("should call popDialect twice when passed a tagEnd token", function () {
-      compiler.popDialect = spyOnMethods(compiler, compiler.popDialect);
+      sinon.spy(compiler, 'popDialect');
       compiler.generateCodeForAttributeValueToken(makeTok("tagEnd", ">"));
-      expect(compiler.popDialect.calls.count()).toBe(2);
+      expect(compiler.popDialect).to.have.been.calledTwice;
     })
 
     "text error".split(" ").forEach(function (tokenType) {
@@ -367,9 +368,9 @@ describe("Compiler", function () {
 
     it("should call popDialect when passed a dquo token when expecting dquo as the attribute value end token type", function () {
       compiler.setExpectedAttributeValueEndTokenType("dquo");
-      compiler.popDialect = spyOnMethods(compiler, compiler.popDialect);
+      sinon.spy(compiler, 'popDialect');
       compiler.generateCodeForAttributeValueQuotedToken(makeTok("dquo", '"'));
-      expect(compiler.popDialect).toHaveBeenCalledWith();
+      expect(compiler.popDialect).to.have.been.calledWith();
     })
 
     it("should return the correct code for a dquo token when expecting squo as the attribute value end token type", function () {
@@ -386,9 +387,9 @@ describe("Compiler", function () {
 
     it("should call popDialect when passed a squo token when expecting squo as the attribute value end token type", function () {
       compiler.setExpectedAttributeValueEndTokenType("squo");
-      compiler.popDialect = spyOnMethods(compiler, compiler.popDialect);
+      sinon.spy(compiler, 'popDialect');
       compiler.generateCodeForAttributeValueQuotedToken(makeTok("squo", "'"));
-      expect(compiler.popDialect).toHaveBeenCalledWith();
+      expect(compiler.popDialect).to.have.been.calledWith();
     })
 
     it("should return the correct code for a squo token when expecting dquo as the attribute value end token type", function () {
@@ -403,9 +404,9 @@ describe("Compiler", function () {
     })
 
     it("should call pushDialect when passed an entityStart token", function () {
-      compiler.pushDialect = spyOnMethods(compiler, compiler.pushDialect);
+      sinon.spy(compiler, 'pushDialect');
       compiler.generateCodeForAttributeValueQuotedToken(makeTok("entityStart", "&foo"));
-      expect(compiler.pushDialect).toHaveBeenCalledWith("entity");
+      expect(compiler.pushDialect).to.have.been.calledWith("entity");
     })
 
     "text error".split(" ").forEach(function (tokenType) {
@@ -428,9 +429,9 @@ describe("Compiler", function () {
     })
 
     it("should call popDialect when passed a tagEnd token", function () {
-      compiler.popDialect = spyOnMethods(compiler, compiler.popDialect);
+      sinon.spy(compiler, 'popDialect');
       compiler.generateCodeForCloseTagToken(makeTok("tagEnd", ">"));
-      expect(compiler.popDialect).toHaveBeenCalledWith();
+      expect(compiler.popDialect).to.have.been.calledWith();
     })
 
     it("should return the correct code for a tagEnd token", function () {
@@ -447,10 +448,10 @@ describe("Compiler", function () {
     })
 
     it("should call popDialect when passed a closeTag that matches the openening tag", function () {
-      compiler.popDialect = spyOnMethods(compiler, compiler.popDialect);
+      sinon.spy(compiler, 'popDialect');
       compiler.setExpectedRawtextClosingTagName("script");
       compiler.generateCodeForRawtextToken(makeTok("closeTag", "</script>"));
-      expect(compiler.popDialect).toHaveBeenCalledWith();
+      expect(compiler.popDialect).to.have.been.calledWith();
     })
 
     it("should return the correct code for a closeTag token that does not match the opening tag", function () {
@@ -470,7 +471,7 @@ describe("Compiler", function () {
   describe("#expectedRawtextClosingTagName", function () {
     it("should always return the lowercase name", function () {
       compiler.setExpectedRawtextClosingTagName("FOO");
-      expect(compiler.expectedRawtextClosingTagName()).toBe("foo");
+      expect(compiler.expectedRawtextClosingTagName()).to.be.equal("foo");
     })
   })
 
@@ -481,7 +482,7 @@ describe("Compiler", function () {
   var makeTokOffset = 0;
 
   function makeTok (type, value) {
-    return new Foundation.Scanner.Token(type, value, makeTokOffset, 1, makeTokOffset);
+    return new ScannerToken(type, value, makeTokOffset, 1, makeTokOffset);
   }
 
   function resetMakeTok () {
