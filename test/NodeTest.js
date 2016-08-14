@@ -1,4 +1,5 @@
 import RootNode from '../lib/Node/RootNode'
+import TagNode from '../lib/Node/TagNode'
 
 describe("Foundation.HTML.Parser.Node", function () {
   var node;
@@ -57,7 +58,7 @@ describe("Foundation.HTML.Parser.Node", function () {
 
   describe("#children", function () {
     it("should return a copy of the node's children array", function () {
-      var tag = new Foundation.HTML.Parser.Node.Tag();
+      var tag = new TagNode();
       tag.setTagName("foo");
       var text = new Foundation.HTML.Parser.Node.Text();
       tag.appendChild(text);
@@ -72,7 +73,7 @@ describe("Foundation.HTML.Parser.Node", function () {
     })
 
     it("should return null when node can contian children but there are none", function () {
-      var tag = new Foundation.HTML.Parser.Node.Tag();
+      var tag = new TagNode();
       tag.setTagName("foo");
       expect(tag.children()).toBe(null);
     })
@@ -80,7 +81,7 @@ describe("Foundation.HTML.Parser.Node", function () {
 
   describe("#lastChild", function () {
     it("should return the last child in the node's children array", function () {
-      var tag = new Foundation.HTML.Parser.Node.Tag();
+      var tag = new TagNode();
       tag.setTagName("foo");
       var text1 = new Foundation.HTML.Parser.Node.Text();
       tag.appendChild(text1);
@@ -92,7 +93,7 @@ describe("Foundation.HTML.Parser.Node", function () {
     })
 
     it("should return null when there are no child nodes", function () {
-      var tag = new Foundation.HTML.Parser.Node.Tag();
+      var tag = new TagNode();
       tag.setTagName("foo");
       expect(tag.lastChild()).toBe(null);
     })
@@ -102,7 +103,7 @@ describe("Foundation.HTML.Parser.Node", function () {
     it("should return not only this node's errors but its childrens' too", function () {
       var error1 = new Foundation.HTML.Parser.Error();
       var error2 = new Foundation.HTML.Parser.Error();
-      var tag = new Foundation.HTML.Parser.Node.Tag();
+      var tag = new TagNode();
       tag.setTagName("div");
       node.addError(error1);
       tag.addError(error2);
@@ -155,14 +156,14 @@ describe("Foundation.HTML.Parser.Node.Text", function () {
 })
 
 
-describe("Foundation.HTML.Parser.Node.Tag", function () {
+describe("TagNode", function () {
   var p, br, closeP;
 
   beforeEach(function () {
-    p = new Foundation.HTML.Parser.Node.Tag();
+    p = new TagNode();
     p.addToken(new Foundation.Scanner.Token("tagStart", "<p", 0, 1, 0));
 
-    br = new Foundation.HTML.Parser.Node.Tag();
+    br = new TagNode();
     br.addToken(new Foundation.Scanner.Token("tagStart", "<br", 0, 1, 0));
 
     closeP = new Foundation.HTML.Parser.Node.CloseTag();
@@ -235,7 +236,7 @@ describe("Foundation.HTML.Parser.Node.Tag", function () {
 
   describe("#tagName", function () {
     it("should return the lowercased version of the tag name", function () {
-      var tag = new Foundation.HTML.Parser.Node.Tag();
+      var tag = new TagNode();
       tag.setTagName("FOO");
       expect(tag.tagName()).toBe("foo");
     })

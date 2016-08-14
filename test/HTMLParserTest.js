@@ -1,6 +1,7 @@
 import {expect} from 'chai'
 import HTMLParser from '../lib/HTMLParser'
 import Instr from '../lib/Instr'
+import TagNode from '../lib/Node/TagNode'
 
 describe("HTMLParser", function () {
   var parser;
@@ -96,7 +97,7 @@ describe("HTMLParser", function () {
     var tagNode;
 
     beforeEach(function () {
-      tagNode = new Foundation.HTML.Parser.Node.Tag();
+      tagNode = new TagNode();
       tagNode.setTagName("br");
     })
 
@@ -199,7 +200,7 @@ describe("HTMLParser", function () {
 
     it("should add an attribute node to the current tag node", function () {
       var attr = new Foundation.HTML.Parser.Node.Attr();
-      parser.pushNode(new Foundation.HTML.Parser.Node.Tag());
+      parser.pushNode(new TagNode());
       parser.applyCompletedNode(attr);
       expect(parser.currentNode().attributes()[0]).toBe(attr);
     })
@@ -212,7 +213,7 @@ describe("HTMLParser", function () {
     })
 
     it("should add void tags to the current open element", function () {
-      var br = new Foundation.HTML.Parser.Node.Tag();
+      var br = new TagNode();
       br.setTagName("br");
       parser.applyCompletedNode(br);
       var openElement = parser.currentOpenElement();
@@ -221,7 +222,7 @@ describe("HTMLParser", function () {
     })
 
     it("should push non-void tags onto the open element stack", function () {
-      var div = new Foundation.HTML.Parser.Node.Tag();
+      var div = new TagNode();
       div.setTagName("div");
       parser.applyCompletedNode(div);
       expect(parser.currentOpenElement()).toBe(div);
@@ -238,7 +239,7 @@ describe("HTMLParser", function () {
     it("should call addClosedElementToParent when passed a close tag with a matching open tag", function () {
       parser.addClosedElementToParent = spyOnMethods(parser, parser.addClosedElementToParent);
 
-      var div = new Foundation.HTML.Parser.Node.Tag();
+      var div = new TagNode();
       div.setTagName("div");
       var closeDiv = new Foundation.HTML.Parser.Node.CloseTag();
       closeDiv.setTagName("div");
@@ -251,16 +252,16 @@ describe("HTMLParser", function () {
     it("should call setRawtextModeForTag on the compiler object when called with a rawtext tag node", function () {
       var compiler = parser.compiler();
       compiler.setRawtextModeForTag = spyOnMethods(compiler, compiler.setRawtextModeForTag);
-      var script = new Foundation.HTML.Parser.Node.Tag();
+      var script = new TagNode();
       script.setTagName("script");
       parser.applyCompletedNode(script);
       expect(compiler.setRawtextModeForTag).toHaveBeenCalledWith("script");
     })
 
     it("should add a closing tag node to the tag node it closes", function () {
-      var div = new Foundation.HTML.Parser.Node.Tag();
+      var div = new TagNode();
       div.setTagName("div");
-      var span = new Foundation.HTML.Parser.Node.Tag();
+      var span = new TagNode();
       span.setTagName("span");
       var divClose = new Foundation.HTML.Parser.Node.CloseTag();
       divClose.setTagName("div");
@@ -272,7 +273,7 @@ describe("HTMLParser", function () {
     })
 
     it("should add a closing tag node to the current open element if there is no matching open tag", function () {
-      var div = new Foundation.HTML.Parser.Node.Tag();
+      var div = new TagNode();
       div.setTagName("div");
       var spanClose = new Foundation.HTML.Parser.Node.CloseTag();
       spanClose.setTagName("span");
@@ -283,7 +284,7 @@ describe("HTMLParser", function () {
     })
 
     it("should set an error on bogus closing tags", function () {
-      var div = new Foundation.HTML.Parser.Node.Tag();
+      var div = new TagNode();
       div.setTagName("div");
       var spanClose = new Foundation.HTML.Parser.Node.CloseTag();
       spanClose.setTagName("span");
@@ -298,11 +299,11 @@ describe("HTMLParser", function () {
     var div1, div2, div3;
 
     beforeEach(function () {
-      div1 = new Foundation.HTML.Parser.Node.Tag();
+      div1 = new TagNode();
       div1.setTagName("div");
-      div2 = new Foundation.HTML.Parser.Node.Tag();
+      div2 = new TagNode();
       div2.setTagName("div");
-      div3 = new Foundation.HTML.Parser.Node.Tag();
+      div3 = new TagNode();
       div3.setTagName("div");
     })
 
@@ -330,7 +331,7 @@ describe("HTMLParser", function () {
     })
 
     it("should set an error on closing tag when it closes other tags still open", function () {
-      var span = new Foundation.HTML.Parser.Node.Tag();
+      var span = new TagNode();
       span.setTagName("span");
       var closeDiv = new Foundation.HTML.Parser.Node.CloseTag();
       closeDiv.setTagName("div");
@@ -362,11 +363,11 @@ describe("HTMLParser", function () {
     var div1, div2, div3;
 
     beforeEach(function () {
-      div1 = new Foundation.HTML.Parser.Node.Tag();
+      div1 = new TagNode();
       div1.setTagName("div");
-      div2 = new Foundation.HTML.Parser.Node.Tag();
+      div2 = new TagNode();
       div2.setTagName("div");
-      div3 = new Foundation.HTML.Parser.Node.Tag();
+      div3 = new TagNode();
       div3.setTagName("div");
     })
 
@@ -394,11 +395,11 @@ describe("HTMLParser", function () {
 
   describe("#mostRecentOpenElementWithName", function () {
     it("should return the topmost element in the open element stack with a matching name", function () {
-      var div1 = new Foundation.HTML.Parser.Node.Tag();
+      var div1 = new TagNode();
       div1.setTagName("div");
-      var div2 = new Foundation.HTML.Parser.Node.Tag();
+      var div2 = new TagNode();
       div2.setTagName("div");
-      var p = new Foundation.HTML.Parser.Node.Tag();
+      var p = new TagNode();
       p.setTagName("p");
 
       parser.pushOpenElement(div1);
@@ -415,7 +416,7 @@ describe("HTMLParser", function () {
     })
 
     it("should return the top of the open element stack", function () {
-      var node = new Foundation.HTML.Parser.Node.Tag();
+      var node = new TagNode();
       parser.pushOpenElement(node);
       expect(parser.currentOpenElement()).toBe(node);
     })

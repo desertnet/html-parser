@@ -1,3 +1,5 @@
+import TagNode from '../lib/Node/TagNode'
+
 describe("Foundation.HTML.Parser.Error", function () {
   var error, token;
 
@@ -30,7 +32,7 @@ describe("Foundation.HTML.Parser.Error", function () {
 
   describe("#addTokensFromNode", function () {
     it("should add tokens from the given node", function () {
-      var node = new Foundation.HTML.Parser.Node.Tag();
+      var node = new TagNode();
       node.addToken(token);
       error.addTokensFromNode(node);
       expect(node.tokens()).toEqual([token]);
