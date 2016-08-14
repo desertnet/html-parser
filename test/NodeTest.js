@@ -3,6 +3,7 @@ import TagNode from '../lib/Node/TagNode'
 import TextNode from '../lib/Node/TextNode'
 import AttrNode from '../lib/Node/AttrNode'
 import CloseTagNode from '../lib/Node/CloseTagNode'
+import CommentNode from '../lib/Node/CommentNode'
 
 describe("Foundation.HTML.Parser.Node", function () {
   var node;
@@ -285,11 +286,11 @@ describe("AttrNode", function () {
   })
 })
 
-describe("Foundation.HTML.Parser.Node.Comment", function () {
+describe("CommentNode", function () {
   var comment;
 
   beforeEach(function () {
-    comment = new Foundation.HTML.Parser.Node.Comment();
+    comment = new CommentNode();
     comment.addToken(new Foundation.Scanner.Token("text", "hello world", 0, 1, 0));
   })
 

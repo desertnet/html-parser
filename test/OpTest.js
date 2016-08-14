@@ -1,5 +1,6 @@
 import Instr from '../lib/Instr'
 import TextNode from '../lib/Node/TextNode'
+import CommentNode from '../lib/Node/CommentNode'
 
 describe("Foundation.HTML.Parser.Op", function () {
   describe("#instruction", function () {
@@ -40,7 +41,7 @@ describe("Foundation.HTML.Parser.Op", function () {
   })
 
   describe("#setNode", function () {
-    var node = new Foundation.HTML.Parser.Node.Comment();
+    var node = new CommentNode();
 
     it("should throw an error if called on an op other than PUSH_NODE", function () {
       var op = new Foundation.HTML.Parser.Op(
