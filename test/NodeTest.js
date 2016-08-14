@@ -5,6 +5,7 @@ import AttrNode from '../lib/Node/AttrNode'
 import CloseTagNode from '../lib/Node/CloseTagNode'
 import CommentNode from '../lib/Node/CommentNode'
 import EntityNode from '../lib/Node/EntityNode'
+import HTMLParseError from '../HTMLParseError'
 
 describe("Foundation.HTML.Parser.Node", function () {
   var node;
@@ -28,7 +29,7 @@ describe("Foundation.HTML.Parser.Node", function () {
     it("should add a new parser error when an error token type is added", function () {
       var token = new Foundation.Scanner.Token("error", "foo", 45, 2, 33);
       node.addToken(token);
-      var error = new Foundation.HTML.Parser.Error();
+      var error = new HTMLParseError();
       error.addToken(token);
       expect(node.errors().shift().startIndex()).toBe(45);
     })
@@ -106,8 +107,8 @@ describe("Foundation.HTML.Parser.Node", function () {
 
   describe("#errors", function () {
     it("should return not only this node's errors but its childrens' too", function () {
-      var error1 = new Foundation.HTML.Parser.Error();
-      var error2 = new Foundation.HTML.Parser.Error();
+      var error1 = new HTMLParseError();
+      var error2 = new HTMLParseError();
       var tag = new TagNode();
       tag.setTagName("div");
       node.addError(error1);
@@ -250,14 +251,14 @@ describe("TagNode", function () {
   describe("#errors", function () {
     it("should include errors in its attributes", function () {
       var attr = new AttrNode();
-      var error = new Foundation.HTML.Parser.Error();
+      var error = new HTMLParseError();
       attr.addError(error);
       p.addAttribute(attr);
       expect(p.errors()).toEqual([error]);
     })
 
     it("should include errors in its closing tag", function () {
-      var error = new Foundation.HTML.Parser.Error();
+      var error = new HTMLParseError();
       closeP.addError(error);
       p.appendChild(closeP);
       expect(p.errors()).toEqual([error]);

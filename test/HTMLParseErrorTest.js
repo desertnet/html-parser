@@ -1,10 +1,11 @@
 import TagNode from '../lib/Node/TagNode'
+import HTMLParseError from '../lib/HTMLParseError'
 
-describe("Foundation.HTML.Parser.Error", function () {
+describe("HTMLParseError", function () {
   var error, token;
 
   beforeEach(function () {
-    error = new Foundation.HTML.Parser.Error();
+    error = new HTMLParseError();
     token = new Foundation.Scanner.Token("foo", "bar", 8, 3, 2);
   })
 
