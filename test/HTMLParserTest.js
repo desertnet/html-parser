@@ -1,6 +1,7 @@
 import {expect} from 'chai'
 import HTMLParser from '../lib/HTMLParser'
 import Instr from '../lib/Instr'
+import Op from '../lib/Op'
 import TagNode from '../lib/Node/TagNode'
 import TextNode from '../lib/Node/TextNode'
 import AttrNode from '../lib/Node/AttrNode'

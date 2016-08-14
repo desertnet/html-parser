@@ -1,4 +1,5 @@
 import Instr from '../lib/Instr'
+import Op from '../lib/Op'
 import Compiler from '../lib/Compiler'
 
 describe("Compiler", function () {

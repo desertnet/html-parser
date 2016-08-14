@@ -1,4 +1,5 @@
 import Instr from '../lib/Instr'
+import Op from '../lib/Op'
 import TextNode from '../lib/Node/TextNode'
 import CommentNode from '../lib/Node/CommentNode'
 
