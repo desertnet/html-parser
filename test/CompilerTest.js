@@ -491,8 +491,7 @@ describe("Compiler", function () {
 
   /** @param {...*} foo */
   function makeOps (foo) {
-    var args = Array.prototype.slice.call(arguments, 0);
-    return args.map(function (opDef) {
+    return Array.from(arguments).map(opDef => {
       var op = new Op(opDef[0] || opDef);
       if (Array.isArray(opDef)) {
         if (op.instruction() === Instr.PUSH_NODE) {
