@@ -41,11 +41,11 @@ describe("Foundation.HTML.Parser.Node", function () {
   describe("#indexRange", function () {
     it("should return null if there are no tokens for this node", function () {
       var incompleteNode = new RootNode();
-      expect(incompleteNode.indexRange()).to.be.equal(null);
+      expect(incompleteNode.indexRange).to.be.equal(null);
     })
 
     it("should return the range of character positions in the source string this node covers", function () {
-      expect(node.indexRange()).to.deep.equal([0, 5]);
+      expect(node.indexRange).to.deep.equal([0, 5]);
     })
   })
 
