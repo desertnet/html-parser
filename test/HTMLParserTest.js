@@ -212,7 +212,7 @@ describe("HTMLParser", function () {
     it("should add a text node to the currently open element", function () {
       var node = new TextNode();
       parser.applyCompletedNode(node);
-      expect(parser.currentOpenElement().children().pop()).to.be.equal(node);
+      expect(parser.currentOpenElement().children.pop()).to.be.equal(node);
     })
 
     it("should add an attribute node to the current tag node", function () {

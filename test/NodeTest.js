@@ -71,20 +71,20 @@ describe("Foundation.HTML.Parser.Node", function () {
       tag.setTagName("foo");
       var text = new TextNode();
       tag.appendChild(text);
-      var childrenCopy = tag.children();
+      var childrenCopy = tag.children;
       childrenCopy.pop();
-      expect(tag.children()).to.deep.equal([text]);
+      expect(tag.children).to.deep.equal([text]);
     })
 
     it("should return null when the node cannot contain children", function () {
       var text = new TextNode();
-      expect(text.children()).to.be.equal(null);
+      expect(text.children).to.be.equal(null);
     })
 
     it("should return null when node can contian children but there are none", function () {
       var tag = new TagNode();
       tag.setTagName("foo");
-      expect(tag.children()).to.be.equal(null);
+      expect(tag.children).to.be.equal(null);
     })
   })
 
@@ -198,7 +198,7 @@ describe("TagNode", function () {
   describe("#appendChild", function () {
     it("should append a node to the list of child nodes", function () {
       p.appendChild(br);
-      expect(p.children()).to.deep.equal([br]);
+      expect(p.children).to.deep.equal([br]);
     })
 
     it("should not append close tag nodes to the list of child nodes", function () {
