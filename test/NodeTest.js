@@ -34,7 +34,7 @@ describe("Foundation.HTML.Parser.Node", function () {
       node.addToken(token);
       var error = new HTMLParseError();
       error.addToken(token);
-      expect(node.errors().shift().startIndex()).to.be.equal(45);
+      expect(node.errors.shift().startIndex()).to.be.equal(45);
     })
   })
 
@@ -117,7 +117,7 @@ describe("Foundation.HTML.Parser.Node", function () {
       node.addError(error1);
       tag.addError(error2);
       node.appendChild(tag);
-      expect(node.errors()).to.deep.equal([error1, error2]);
+      expect(node.errors).to.deep.equal([error1, error2]);
     })
   })
 })
@@ -257,14 +257,14 @@ describe("TagNode", function () {
       var error = new HTMLParseError();
       attr.addError(error);
       p.addAttribute(attr);
-      expect(p.errors()).to.deep.equal([error]);
+      expect(p.errors).to.deep.equal([error]);
     })
 
     it("should include errors in its closing tag", function () {
       var error = new HTMLParseError();
       closeP.addError(error);
       p.appendChild(closeP);
-      expect(p.errors()).to.deep.equal([error]);
+      expect(p.errors).to.deep.equal([error]);
     })
   })
 })
