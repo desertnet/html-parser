@@ -99,6 +99,15 @@ describe("HTMLParser", function () {
     it("should consider header tags valid HTML", function () {
       expect(validate("<h1>foo</h1>")).to.deep.equal([]);
     })
+
+    it("should not consider a correctly named entity to be an error", () => {
+      expect(validate("&eacute;")).to.deep.equal([])
+    })
+
+    it("should consider a misspelled named entity an error", function () {
+      const errors = validate("&foobar;")
+      expect(errors.length).to.be.equal(1)
+    })
   })
 
   describe("#finalize", function () {
