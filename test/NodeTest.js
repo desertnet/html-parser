@@ -191,7 +191,7 @@ describe("TagNode", function () {
 
   describe("#addToken", function () {
     it("should set the tagName when passed a tagStart token", function () {
-      expect(p.tagName()).to.be.equal("p");
+      expect(p.tagName).to.be.equal("p");
     })
   })
 
@@ -247,7 +247,7 @@ describe("TagNode", function () {
     it("should return the lowercased version of the tag name", function () {
       var tag = new TagNode();
       tag.setTagName("FOO");
-      expect(tag.tagName()).to.be.equal("foo");
+      expect(tag.tagName).to.be.equal("foo");
     })
   })
 
@@ -358,7 +358,7 @@ describe("CloseTagNode", function () {
     it("should return the lowercased version of the tag name", function () {
       var tag = new CloseTagNode();
       tag.setTagName("FOO");
-      expect(tag.tagName()).to.be.equal("foo");
+      expect(tag.tagName).to.be.equal("foo");
     })
   })
 
@@ -366,13 +366,13 @@ describe("CloseTagNode", function () {
     it("should set the tagName when passed a closeTagStart token", function () {
       var closeTag = new CloseTagNode();
       closeTag.addToken(new ScannerToken("closeTagStart", "</foo", 0, 1, 0));
-      expect(closeTag.tagName()).to.be.equal("foo");
+      expect(closeTag.tagName).to.be.equal("foo");
     })
 
     it("should set the tagName when passed a closeTag token", function () {
       var closeTag = new CloseTagNode();
       closeTag.addToken(new ScannerToken("closeTag", "</foobar>", 0, 1, 0));
-      expect(closeTag.tagName()).to.be.equal("foobar");
+      expect(closeTag.tagName).to.be.equal("foobar");
     })
   })
 })
