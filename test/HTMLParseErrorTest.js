@@ -13,22 +13,22 @@ describe("HTMLParseError", function () {
   describe("#addToken", function () {
     it("should correctly set the startIndex", function () {
       error.addToken(token);
-      expect(error.startIndex()).to.be.equal(8);
+      expect(error.startIndex).to.be.equal(8);
     })
 
     it("should correctly set the line", function () {
       error.addToken(token);
-      expect(error.line()).to.be.equal(3);
+      expect(error.line).to.be.equal(3);
     })
 
     it("should correctly set the column", function () {
       error.addToken(token);
-      expect(error.column()).to.be.equal(2);
+      expect(error.column).to.be.equal(2);
     })
 
     it("should correctly set the endIndex", function () {
       error.addToken(token);
-      expect(error.endIndex()).to.be.equal(11);
+      expect(error.endIndex).to.be.equal(11);
     })
   })
 

@@ -34,7 +34,7 @@ describe("Foundation.HTML.Parser.Node", function () {
       node.addToken(token);
       var error = new HTMLParseError();
       error.addToken(token);
-      expect(node.errors.shift().startIndex()).to.be.equal(45);
+      expect(node.errors.shift().startIndex).to.be.equal(45);
     })
   })
 
