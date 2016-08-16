@@ -37,7 +37,7 @@ describe("HTMLParseError", function () {
       var node = new TagNode();
       node.addToken(token);
       error.addTokensFromNode(node);
-      expect(node.tokens()).to.deep.equal([token]);
+      expect(node.tokens).to.deep.equal([token]);
     })
   })
 })

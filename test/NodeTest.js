@@ -21,7 +21,7 @@ describe("Foundation.HTML.Parser.Node", function () {
 
   describe("#tokens", function () {
     it("should return the tokens in an array", function () {
-      expect(node.tokens()).to.deep.equal([
+      expect(node.tokens).to.deep.equal([
         new ScannerToken("text", "foo", 0, 1, 0),
         new ScannerToken("text", "bar", 3, 1, 3)
       ]);
