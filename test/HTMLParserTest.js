@@ -128,7 +128,7 @@ describe("HTMLParser", function () {
     it("should move open elements into the parse tree", function () {
       parser.pushOpenElement(tagNode);
       parser.finalize();
-      expect(parser.parseTree().lastChild()).to.be.equal(tagNode);
+      expect(parser.parseTree().lastChild).to.be.equal(tagNode);
     })
 
     it("should add errors to the topmost unfinished node", function () {
@@ -235,7 +235,7 @@ describe("HTMLParser", function () {
       parser.applyCompletedNode(br);
       var openElement = parser.currentOpenElement();
       expect(openElement !== br);
-      expect(openElement.lastChild()).to.be.equal(br);
+      expect(openElement.lastChild).to.be.equal(br);
     })
 
     it("should push non-void tags onto the open element stack", function () {
@@ -297,7 +297,7 @@ describe("HTMLParser", function () {
 
       parser.pushOpenElement(div);
       parser.applyCompletedNode(spanClose);
-      expect(parser.currentOpenElement().lastChild()).to.be.equal(spanClose);
+      expect(parser.currentOpenElement().lastChild).to.be.equal(spanClose);
     })
 
     it("should set an error on bogus closing tags", function () {
@@ -341,10 +341,10 @@ describe("HTMLParser", function () {
       div1.appendChild(closeDiv);
       parser.addClosedElementToParent(div1);
 
-      expect(parser.currentOpenElement().lastChild()).to.be.equal(div1);
-      expect(div1.lastChild()).to.be.equal(div2);
-      expect(div2.lastChild()).to.be.equal(div3);
-      expect(div3.lastChild()).to.be.equal(null);
+      expect(parser.currentOpenElement().lastChild).to.be.equal(div1);
+      expect(div1.lastChild).to.be.equal(div2);
+      expect(div2.lastChild).to.be.equal(div3);
+      expect(div3.lastChild).to.be.equal(null);
     })
 
     it("should set an error on closing tag when it closes other tags still open", function () {

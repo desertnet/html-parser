@@ -98,13 +98,13 @@ describe("Foundation.HTML.Parser.Node", function () {
       tag.appendChild(text2);
       var text3 = new TextNode();
       tag.appendChild(text3);
-      expect(tag.lastChild()).to.be.equal(text3);
+      expect(tag.lastChild).to.be.equal(text3);
     })
 
     it("should return null when there are no child nodes", function () {
       var tag = new TagNode();
       tag.setTagName("foo");
-      expect(tag.lastChild()).to.be.equal(null);
+      expect(tag.lastChild).to.be.equal(null);
     })
   })
 
@@ -203,14 +203,14 @@ describe("TagNode", function () {
 
     it("should not append close tag nodes to the list of child nodes", function () {
       p.appendChild(closeP);
-      expect(p.lastChild()).to.be.equal(null);
+      expect(p.lastChild).to.be.equal(null);
     })
 
     it("should append bogus closing tags to the list of child nodes and not make it the closing tag", function () {
       var closeDiv = new CloseTagNode();
       closeDiv.setTagName("div");
       p.appendChild(closeDiv);
-      expect(p.lastChild()).to.be.equal(closeDiv);
+      expect(p.lastChild).to.be.equal(closeDiv);
       expect(p.closingTag()).to.be.equal(null);
     })
   })
