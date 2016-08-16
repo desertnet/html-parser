@@ -136,8 +136,8 @@ describe("HTMLParser", function () {
       parser.pushNode(tagNode);
       parser.pushNode(attrNode);
       parser.finalize();
-      expect(tagNode.ownErrors().length).to.be.equal(0);
-      expect(attrNode.ownErrors().length).to.be.equal(1);
+      expect(tagNode.ownErrors.length).to.be.equal(0);
+      expect(attrNode.ownErrors.length).to.be.equal(1);
     })
   })
 
@@ -308,7 +308,7 @@ describe("HTMLParser", function () {
 
       parser.pushOpenElement(div);
       parser.applyCompletedNode(spanClose);
-      expect(spanClose.ownErrors().length).to.be.equal(1);
+      expect(spanClose.ownErrors.length).to.be.equal(1);
     })
   })
 
@@ -357,7 +357,7 @@ describe("HTMLParser", function () {
       parser.pushOpenElement(div1);
       parser.pushOpenElement(span);
       parser.addClosedElementToParent(div1);
-      expect(closeDiv.ownErrors().length).to.be.equal(1);
+      expect(closeDiv.ownErrors.length).to.be.equal(1);
     })
 
     it("should set an error on elements without closing tags", function () {
@@ -370,9 +370,9 @@ describe("HTMLParser", function () {
       parser.pushOpenElement(div3);
       parser.addClosedElementToParent(div1);
 
-      expect(div1.ownErrors().length).to.be.equal(0);
-      expect(div2.ownErrors().length).to.be.equal(1);
-      expect(div3.ownErrors().length).to.be.equal(1);
+      expect(div1.ownErrors.length).to.be.equal(0);
+      expect(div2.ownErrors.length).to.be.equal(1);
+      expect(div3.ownErrors.length).to.be.equal(1);
     })
   })
 
