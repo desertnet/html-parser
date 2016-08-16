@@ -131,7 +131,7 @@ describe("RootNode", function () {
 
   describe("#canHaveChildren", function () {
     it("should return true", function () {
-      expect(root.canHaveChildren()).to.be.equal(true);
+      expect(root.canHaveChildren).to.be.equal(true);
     })
   })
 })
@@ -146,7 +146,7 @@ describe("TextNode", function () {
 
   describe("#canHaveChildren", function () {
     it("should return true", function () {
-      expect(text.canHaveChildren()).to.be.equal(false);
+      expect(text.canHaveChildren).to.be.equal(false);
     })
   })
 
@@ -181,11 +181,11 @@ describe("TagNode", function () {
 
   describe("#canHaveChildren", function () {
     it("should return true for a tag that can have children", function () {
-      expect(p.canHaveChildren()).to.be.equal(true);
+      expect(p.canHaveChildren).to.be.equal(true);
     })
 
     it("should return false for a void tag", function () {
-      expect(br.canHaveChildren()).to.be.equal(false);
+      expect(br.canHaveChildren).to.be.equal(false);
     })
   })
 
@@ -280,7 +280,7 @@ describe("AttrNode", function () {
 
   describe("#canHaveChildren", function () {
     it("should return false for attribute nodes", function () {
-      expect(dataAttr.canHaveChildren()).to.be.equal(false);
+      expect(dataAttr.canHaveChildren).to.be.equal(false);
     })
   })
 
@@ -301,7 +301,7 @@ describe("CommentNode", function () {
 
   describe("#canHaveChildren", function () {
     it("should return false for comment nodes", function () {
-      expect(comment.canHaveChildren()).to.be.equal(false);
+      expect(comment.canHaveChildren).to.be.equal(false);
     })
   })
 
@@ -322,7 +322,7 @@ describe("EntityNode", function () {
 
   describe("#canHaveChildren", function () {
     it("should return false for entity nodes", function () {
-      expect(pooEnt.canHaveChildren()).to.be.equal(false);
+      expect(pooEnt.canHaveChildren).to.be.equal(false);
     })
   })
 
@@ -344,7 +344,7 @@ describe("CloseTagNode", function () {
 
   describe("#canHaveChildren", function () {
     it("should return false for close tag nodes", function () {
-      expect(closeTag.canHaveChildren()).to.be.equal(false);
+      expect(closeTag.canHaveChildren).to.be.equal(false);
     })
   })
 
