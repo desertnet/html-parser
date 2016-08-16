@@ -68,7 +68,7 @@ describe("Foundation.HTML.Parser.Node", function () {
   describe("#children", function () {
     it("should return a copy of the node's children array", function () {
       var tag = new TagNode();
-      tag.setTagName("foo");
+      tag.tagName = "foo";
       var text = new TextNode();
       tag.appendChild(text);
       var childrenCopy = tag.children;
@@ -83,7 +83,7 @@ describe("Foundation.HTML.Parser.Node", function () {
 
     it("should return null when node can contian children but there are none", function () {
       var tag = new TagNode();
-      tag.setTagName("foo");
+      tag.tagName = "foo";
       expect(tag.children).to.be.equal(null);
     })
   })
@@ -91,7 +91,7 @@ describe("Foundation.HTML.Parser.Node", function () {
   describe("#lastChild", function () {
     it("should return the last child in the node's children array", function () {
       var tag = new TagNode();
-      tag.setTagName("foo");
+      tag.tagName = "foo";
       var text1 = new TextNode();
       tag.appendChild(text1);
       var text2 = new TextNode();
@@ -103,7 +103,7 @@ describe("Foundation.HTML.Parser.Node", function () {
 
     it("should return null when there are no child nodes", function () {
       var tag = new TagNode();
-      tag.setTagName("foo");
+      tag.tagName = "foo";
       expect(tag.lastChild).to.be.equal(null);
     })
   })
@@ -113,7 +113,7 @@ describe("Foundation.HTML.Parser.Node", function () {
       var error1 = new HTMLParseError();
       var error2 = new HTMLParseError();
       var tag = new TagNode();
-      tag.setTagName("div");
+      tag.tagName = "div";
       node.addError(error1);
       tag.addError(error2);
       node.appendChild(tag);
@@ -176,7 +176,7 @@ describe("TagNode", function () {
     br.addToken(new ScannerToken("tagStart", "<br", 0, 1, 0));
 
     closeP = new CloseTagNode();
-    closeP.setTagName("p");
+    closeP.tagName = "p";
   })
 
   describe("#canHaveChildren", function () {
@@ -208,7 +208,7 @@ describe("TagNode", function () {
 
     it("should append bogus closing tags to the list of child nodes and not make it the closing tag", function () {
       var closeDiv = new CloseTagNode();
-      closeDiv.setTagName("div");
+      closeDiv.tagName = "div";
       p.appendChild(closeDiv);
       expect(p.lastChild).to.be.equal(closeDiv);
       expect(p.closingTag()).to.be.equal(null);
@@ -246,7 +246,7 @@ describe("TagNode", function () {
   describe("#tagName", function () {
     it("should return the lowercased version of the tag name", function () {
       var tag = new TagNode();
-      tag.setTagName("FOO");
+      tag.tagName = "FOO";
       expect(tag.tagName).to.be.equal("foo");
     })
   })
@@ -357,7 +357,7 @@ describe("CloseTagNode", function () {
   describe("#tagName", function () {
     it("should return the lowercased version of the tag name", function () {
       var tag = new CloseTagNode();
-      tag.setTagName("FOO");
+      tag.tagName = "FOO";
       expect(tag.tagName).to.be.equal("foo");
     })
   })

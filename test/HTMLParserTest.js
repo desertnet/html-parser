@@ -115,7 +115,7 @@ describe("HTMLParser", function () {
 
     beforeEach(function () {
       tagNode = new TagNode();
-      tagNode.setTagName("br");
+      tagNode.tagName = "br";
     })
 
     it("should unfinished nodes from the stack", function () {
@@ -231,7 +231,7 @@ describe("HTMLParser", function () {
 
     it("should add void tags to the current open element", function () {
       var br = new TagNode();
-      br.setTagName("br");
+      br.tagName = "br";
       parser.applyCompletedNode(br);
       var openElement = parser.currentOpenElement();
       expect(openElement !== br);
@@ -240,7 +240,7 @@ describe("HTMLParser", function () {
 
     it("should push non-void tags onto the open element stack", function () {
       var div = new TagNode();
-      div.setTagName("div");
+      div.tagName = "div";
       parser.applyCompletedNode(div);
       expect(parser.currentOpenElement()).to.be.equal(div);
     })
@@ -248,7 +248,7 @@ describe("HTMLParser", function () {
     it("should call mostRecentOpenElementWithName when passed a close tag node", function () {
       sinon.spy(parser, 'mostRecentOpenElementWithName');
       var close = new CloseTagNode();
-      close.setTagName("FOO");
+      close.tagName = "FOO";
       parser.applyCompletedNode(close);
       expect(parser.mostRecentOpenElementWithName).to.have.been.calledWith("foo");
     })
@@ -257,9 +257,9 @@ describe("HTMLParser", function () {
       sinon.spy(parser, 'addClosedElementToParent');
 
       var div = new TagNode();
-      div.setTagName("div");
+      div.tagName = "div";
       var closeDiv = new CloseTagNode();
-      closeDiv.setTagName("div");
+      closeDiv.tagName = "div";
 
       parser.pushOpenElement(div);
       parser.applyCompletedNode(closeDiv);
@@ -270,18 +270,18 @@ describe("HTMLParser", function () {
       var compiler = parser.compiler();
       sinon.spy(compiler, 'setRawtextModeForTag');
       var script = new TagNode();
-      script.setTagName("script");
+      script.tagName = "script";
       parser.applyCompletedNode(script);
       expect(compiler.setRawtextModeForTag).to.have.been.calledWith("script");
     })
 
     it("should add a closing tag node to the tag node it closes", function () {
       var div = new TagNode();
-      div.setTagName("div");
+      div.tagName = "div";
       var span = new TagNode();
-      span.setTagName("span");
+      span.tagName = "span";
       var divClose = new CloseTagNode();
-      divClose.setTagName("div");
+      divClose.tagName = "div";
 
       parser.pushOpenElement(div);
       parser.pushOpenElement(span);
@@ -291,9 +291,9 @@ describe("HTMLParser", function () {
 
     it("should add a closing tag node to the current open element if there is no matching open tag", function () {
       var div = new TagNode();
-      div.setTagName("div");
+      div.tagName = "div";
       var spanClose = new CloseTagNode();
-      spanClose.setTagName("span");
+      spanClose.tagName = "span";
 
       parser.pushOpenElement(div);
       parser.applyCompletedNode(spanClose);
@@ -302,9 +302,9 @@ describe("HTMLParser", function () {
 
     it("should set an error on bogus closing tags", function () {
       var div = new TagNode();
-      div.setTagName("div");
+      div.tagName = "div";
       var spanClose = new CloseTagNode();
-      spanClose.setTagName("span");
+      spanClose.tagName = "span";
 
       parser.pushOpenElement(div);
       parser.applyCompletedNode(spanClose);
@@ -317,11 +317,11 @@ describe("HTMLParser", function () {
 
     beforeEach(function () {
       div1 = new TagNode();
-      div1.setTagName("div");
+      div1.tagName = "div";
       div2 = new TagNode();
-      div2.setTagName("div");
+      div2.tagName = "div";
       div3 = new TagNode();
-      div3.setTagName("div");
+      div3.tagName = "div";
     })
 
     it("should cause the currentOpenElement to return the closing node's parent", function () {
@@ -333,7 +333,7 @@ describe("HTMLParser", function () {
 
     it("should make closed elements children of each other and the currently open element", function () {
       var closeDiv = new CloseTagNode();
-      closeDiv.setTagName("div");
+      closeDiv.tagName = "div";
 
       parser.pushOpenElement(div1);
       parser.pushOpenElement(div2);
@@ -349,9 +349,9 @@ describe("HTMLParser", function () {
 
     it("should set an error on closing tag when it closes other tags still open", function () {
       var span = new TagNode();
-      span.setTagName("span");
+      span.tagName = "span";
       var closeDiv = new CloseTagNode();
-      closeDiv.setTagName("div");
+      closeDiv.tagName = "div";
       div1.appendChild(closeDiv);
 
       parser.pushOpenElement(div1);
@@ -362,7 +362,7 @@ describe("HTMLParser", function () {
 
     it("should set an error on elements without closing tags", function () {
       var closeDiv = new CloseTagNode();
-      closeDiv.setTagName("div");
+      closeDiv.tagName = "div";
       div1.appendChild(closeDiv);
 
       parser.pushOpenElement(div1);
@@ -381,11 +381,11 @@ describe("HTMLParser", function () {
 
     beforeEach(function () {
       div1 = new TagNode();
-      div1.setTagName("div");
+      div1.tagName = "div";
       div2 = new TagNode();
-      div2.setTagName("div");
+      div2.tagName = "div";
       div3 = new TagNode();
-      div3.setTagName("div");
+      div3.tagName = "div";
     })
 
     it("should cause the currentOpenElement to return the closing node's parent", function () {
@@ -413,11 +413,11 @@ describe("HTMLParser", function () {
   describe("#mostRecentOpenElementWithName", function () {
     it("should return the topmost element in the open element stack with a matching name", function () {
       var div1 = new TagNode();
-      div1.setTagName("div");
+      div1.tagName = "div";
       var div2 = new TagNode();
-      div2.setTagName("div");
+      div2.tagName = "div";
       var p = new TagNode();
-      p.setTagName("p");
+      p.tagName = "p";
 
       parser.pushOpenElement(div1);
       parser.pushOpenElement(div2);
