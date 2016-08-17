@@ -283,7 +283,7 @@ describe("HTMLParser", function () {
       parser.pushOpenElement(div);
       parser.pushOpenElement(span);
       parser.applyCompletedNode(divClose);
-      expect(div.closingTag()).to.be.equal(divClose);
+      expect(div.closingTag).to.be.equal(divClose);
     })
 
     it("should add a closing tag node to the current open element if there is no matching open tag", function () {

@@ -205,18 +205,18 @@ describe("TagNode", function () {
       closeDiv.tagName = "div";
       p.appendChild(closeDiv);
       expect(p.lastChild).to.be.equal(closeDiv);
-      expect(p.closingTag()).to.be.equal(null);
+      expect(p.closingTag).to.be.equal(null);
     })
   })
 
   describe("#closingTag", function () {
     it("should return null when there is no closing tag", function () {
-      expect(p.closingTag()).to.be.equal(null);
+      expect(p.closingTag).to.be.equal(null);
     })
 
     it("should return the close tag node when it has one", function () {
       p.appendChild(closeP);
-      expect(p.closingTag()).to.be.equal(closeP);
+      expect(p.closingTag).to.be.equal(closeP);
     })
   })
 
