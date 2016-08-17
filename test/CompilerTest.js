@@ -119,7 +119,7 @@ describe("Compiler", function () {
 
     it("should return correct code for a commentStart token", function () {
       var code = compiler.generateCodeForContentToken(makeTok("commentStart", "<!--"));
-      expect(code).toMatchCodeDescription("PUSH_NODE:CMNT ADD_TOKEN:commentStart");
+      expect(code).toMatchCodeDescription("PUSH_NODE:COMMENT ADD_TOKEN:commentStart");
     })
 
     it("should call pushDialect when passed a commentStart token", function () {
@@ -130,7 +130,7 @@ describe("Compiler", function () {
 
     it("should return correct code for an entityStart token", function () {
       var code = compiler.generateCodeForContentToken(makeTok("entityStart", "&"));
-      expect(code).toMatchCodeDescription("PUSH_NODE:ENT ADD_TOKEN:entityStart");
+      expect(code).toMatchCodeDescription("PUSH_NODE:ENTITY ADD_TOKEN:entityStart");
     })
 
     it("should call pushDialect when passed an entityStart token", function () {
@@ -152,7 +152,7 @@ describe("Compiler", function () {
 
     it("should return the correct code for a closeTagStart token", function () {
       var code = compiler.generateCodeForContentToken(makeTok("closeTagStart", "</foo"));
-      expect(code).toMatchCodeDescription("PUSH_NODE:CLOSE ADD_TOKEN:closeTagStart");
+      expect(code).toMatchCodeDescription("PUSH_NODE:CLOSETAG ADD_TOKEN:closeTagStart");
     })
 
     it("should call pushDialect when passed a closeTagStart token", function () {
@@ -226,7 +226,7 @@ describe("Compiler", function () {
 
     it("should return correct code for an attributeStart token", function () {
       var code = compiler.generateCodeForTagToken(makeTok("attributeStart", "foo"));
-      expect(code).toMatchCodeDescription("PUSH_NODE:ATTR ADD_TOKEN:attributeStart");
+      expect(code).toMatchCodeDescription("PUSH_NODE:ATTRIBUTE ADD_TOKEN:attributeStart");
     })
 
     it("should call pushDialect when passed an attributeStart token", function () {
@@ -247,7 +247,7 @@ describe("Compiler", function () {
 
     it("should return correct code for an error token", function () {
       var code = compiler.generateCodeForTagToken(makeTok("error", "'"));
-      expect(code).toMatchCodeDescription("PUSH_NODE:ATTR ADD_TOKEN:error");
+      expect(code).toMatchCodeDescription("PUSH_NODE:ATTRIBUTE ADD_TOKEN:error");
     })
   })
 
@@ -312,7 +312,7 @@ describe("Compiler", function () {
     "attributeStart error".split(" ").forEach(function (tokenType) {
       it("should return the correct code for an " + tokenType + " token", function () {
         var code = compiler.generateCodeForAttributeToken(makeTok(tokenType, "foo"));
-        expect(code).toMatchCodeDescription("POP_NODE PUSH_NODE:ATTR ADD_TOKEN:" + tokenType);
+        expect(code).toMatchCodeDescription("POP_NODE PUSH_NODE:ATTRIBUTE ADD_TOKEN:" + tokenType);
       })
     })
   })
@@ -331,7 +331,7 @@ describe("Compiler", function () {
 
     it("should return the correct code for an entityStart token", function () {
       var code = compiler.generateCodeForAttributeValueToken(makeTok("entityStart", "&foo"));
-      expect(code).toMatchCodeDescription("PUSH_NODE:ENT ADD_TOKEN:entityStart");
+      expect(code).toMatchCodeDescription("PUSH_NODE:ENTITY ADD_TOKEN:entityStart");
     })
 
     it("should push the entity dialect when passed an entityStart token", function () {
@@ -400,7 +400,7 @@ describe("Compiler", function () {
 
     it("should return the correct code for an entityStart token", function () {
       var code = compiler.generateCodeForAttributeValueQuotedToken(makeTok("entityStart", "&foo"));
-      expect(code).toMatchCodeDescription("PUSH_NODE:ENT ADD_TOKEN:entityStart");
+      expect(code).toMatchCodeDescription("PUSH_NODE:ENTITY ADD_TOKEN:entityStart");
     })
 
     it("should call pushDialect when passed an entityStart token", function () {
@@ -444,7 +444,7 @@ describe("Compiler", function () {
     it("should return the correct code for a closeTag that matches the opening tag", function () {
       compiler.setExpectedRawtextClosingTagName("script");
       var code = compiler.generateCodeForRawtextToken(makeTok("closeTag", "</script>"));
-      expect(code).toMatchCodeDescription("PUSH_NODE:CLOSE ADD_TOKEN:closeTag POP_NODE");
+      expect(code).toMatchCodeDescription("PUSH_NODE:CLOSETAG ADD_TOKEN:closeTag POP_NODE");
     })
 
     it("should call popDialect when passed a closeTag that matches the openening tag", function () {
