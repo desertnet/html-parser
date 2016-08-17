@@ -1,13 +1,7 @@
 import {expect} from 'chai'
 import {Token as ScannerToken} from '@desertnet/scanner'
 
-import RootNode from '../lib/HTMLNode/RootNode'
-import TagNode from '../lib/HTMLNode/TagNode'
-import TextNode from '../lib/HTMLNode/TextNode'
-import AttrNode from '../lib/HTMLNode/AttrNode'
-import CloseTagNode from '../lib/HTMLNode/CloseTagNode'
-import CommentNode from '../lib/HTMLNode/CommentNode'
-import EntityNode from '../lib/HTMLNode/EntityNode'
+import {RootNode, TagNode, TextNode, AttrNode, CloseTagNode, CommentNode, EntityNode} from '../lib/HTMLNode'
 import HTMLParseError from '../lib/HTMLParseError'
 
 describe("Foundation.HTML.Parser.HTMLNode", function () {

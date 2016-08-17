@@ -4,10 +4,7 @@ import sinonChai from 'sinon-chai'
 import HTMLParser from '../lib/HTMLParser'
 import Instr from '../lib/Instr'
 import Op from '../lib/Op'
-import TagNode from '../lib/HTMLNode/TagNode'
-import TextNode from '../lib/HTMLNode/TextNode'
-import AttrNode from '../lib/HTMLNode/AttrNode'
-import CloseTagNode from '../lib/HTMLNode/CloseTagNode'
+import {TagNode, TextNode, AttrNode, CloseTagNode} from '../lib/HTMLNode'
 
 chai.use(sinonChai)
 
