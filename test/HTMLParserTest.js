@@ -216,7 +216,7 @@ describe("HTMLParser", function () {
       var attr = new AttrNode();
       parser.pushNode(new TagNode());
       parser.applyCompletedNode(attr);
-      expect(parser.currentNode().attributes()[0]).to.be.equal(attr);
+      expect(parser.currentNode().attributes[0]).to.be.equal(attr);
     })
 
     it("should throw an error if it attempts to add an attribute node to a non-tag node", function () {
