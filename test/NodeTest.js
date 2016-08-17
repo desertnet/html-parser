@@ -1,16 +1,16 @@
 import {expect} from 'chai'
 import {Token as ScannerToken} from '@desertnet/scanner'
 
-import RootNode from '../lib/Node/RootNode'
-import TagNode from '../lib/Node/TagNode'
-import TextNode from '../lib/Node/TextNode'
-import AttrNode from '../lib/Node/AttrNode'
-import CloseTagNode from '../lib/Node/CloseTagNode'
-import CommentNode from '../lib/Node/CommentNode'
-import EntityNode from '../lib/Node/EntityNode'
+import RootNode from '../lib/HTMLNode/RootNode'
+import TagNode from '../lib/HTMLNode/TagNode'
+import TextNode from '../lib/HTMLNode/TextNode'
+import AttrNode from '../lib/HTMLNode/AttrNode'
+import CloseTagNode from '../lib/HTMLNode/CloseTagNode'
+import CommentNode from '../lib/HTMLNode/CommentNode'
+import EntityNode from '../lib/HTMLNode/EntityNode'
 import HTMLParseError from '../lib/HTMLParseError'
 
-describe("Foundation.HTML.Parser.Node", function () {
+describe("Foundation.HTML.Parser.HTMLNode", function () {
   var node;
 
   beforeEach(function () {
@@ -52,7 +52,7 @@ describe("Foundation.HTML.Parser.Node", function () {
   describe("#canHaveChildren", function () {
     it("should throw an error on base class", function () {
       expect(function () {
-        Node.prototype.canHaveChildren.call(node)
+        HTMLNode.prototype.canHaveChildren.call(node)
       }).to.throw();
     })
   })
@@ -60,7 +60,7 @@ describe("Foundation.HTML.Parser.Node", function () {
   describe("#toString", function () {
     it("should throw an error when called on base class", function () {
       expect(function () {
-        Node.prototype.toString.call(node);
+        HTMLNode.prototype.toString.call(node);
       }).to.throw();
     })
   })

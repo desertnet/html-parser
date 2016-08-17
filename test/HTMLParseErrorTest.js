@@ -1,4 +1,4 @@
-import TagNode from '../lib/Node/TagNode'
+import TagNode from '../lib/HTMLNode/TagNode'
 import HTMLParseError from '../lib/HTMLParseError'
 import {expect} from 'chai'
 

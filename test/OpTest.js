@@ -2,8 +2,8 @@ import {expect} from 'chai'
 import {Token as ScannerToken} from '@desertnet/scanner'
 import Instr from '../lib/Instr'
 import Op from '../lib/Op'
-import TextNode from '../lib/Node/TextNode'
-import CommentNode from '../lib/Node/CommentNode'
+import TextNode from '../lib/HTMLNode/TextNode'
+import CommentNode from '../lib/HTMLNode/CommentNode'
 
 describe("Op", function () {
   describe("#instruction", function () {
