@@ -1,6 +1,6 @@
 {
   "name": "@desertnet/html-parser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "HTML parser and non-strict validator",
   "main": "index.js",
   "scripts": {
